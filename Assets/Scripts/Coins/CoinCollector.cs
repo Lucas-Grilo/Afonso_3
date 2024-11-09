@@ -5,35 +5,38 @@ public class CoinCollector : MonoBehaviour
 {
     public int currentCoinCount = 0; // Contador de moedas coletadas
     public TextMeshProUGUI coinText; // Referência ao componente TMP
+    public AudioClip coinSound; // Som da coleta da moeda
+    private AudioSource audioSource; // Referência ao AudioSource do jogador
 
     void Start()
     {
+        audioSource = GetComponent<AudioSource>(); // Obtém o AudioSource do objeto jogador (Player)
         UpdateCoinText(); // Atualiza o texto no início
     }
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        Debug.Log("Colidiu com: " + other.gameObject.name); // Log para verificar a colisão
-
-        // Verifica se o objeto colidido está na camada "Moeda"
+        // Verifica se o objeto colidido é uma moeda com a camada "Moeda"
         if (other.gameObject.layer == LayerMask.NameToLayer("Moeda"))
         {
             Debug.Log("Moeda coletada!"); // Log para verificar a coleta
-            CoinAnimation coinAnimation = other.GetComponent<CoinAnimation>();
-            if (coinAnimation != null)
+
+            // Reproduz o som da coleta
+            if (audioSource != null && coinSound != null)
             {
-                coinAnimation.CollectCoin(); // Aciona a coleta da moeda
-                currentCoinCount++; // Incrementa o contador de moedas
-                UpdateCoinText(); // Atualiza o texto para refletir o novo total
+                audioSource.PlayOneShot(coinSound); // Toca o som da coleta
             }
-            else
-            {
-                Debug.LogError("CoinAnimation não encontrado na moeda: " + other.gameObject.name);
-            }
+
+            // Incrementa a contagem de moedas
+            currentCoinCount++; 
+            UpdateCoinText(); // Atualiza o texto da quantidade de moedas
+
+            // Destrói a moeda imediatamente após tocar o som
+            Destroy(other.gameObject); // Destrói a moeda imediatamente
         }
         else
         {
-            Debug.Log("O objeto não é uma moeda.");
+            Debug.Log("A colisão não foi com um objeto na camada 'Moeda'.");
         }
     }
 

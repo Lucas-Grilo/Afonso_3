@@ -7627,7 +7627,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8698283049178281399, guid: c23337c7e613b084eb2b9fe7d0f4051c, type: 3}
       propertyPath: m_RootOrder
-      value: 29
+      value: 28
       objectReference: {fileID: 0}
     - target: {fileID: 8698283049178281399, guid: c23337c7e613b084eb2b9fe7d0f4051c, type: 3}
       propertyPath: m_LocalPosition.x
@@ -10913,14 +10913,13 @@ GameObject:
   - component: {fileID: 576416266}
   - component: {fileID: 576416279}
   - component: {fileID: 576416273}
-  - component: {fileID: 576416282}
   - component: {fileID: 576416285}
   - component: {fileID: 576416277}
   - component: {fileID: 576416278}
   - component: {fileID: 576416284}
   - component: {fileID: 576416283}
-  - component: {fileID: 576416280}
   - component: {fileID: 576416286}
+  - component: {fileID: 576416287}
   m_Layer: 7
   m_Name: Player
   m_TagString: Player
@@ -11084,7 +11083,7 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 697598439717270700, guid: 9c62f08b37bdc7f4eaa7984e7c30d6f5, type: 2}
-  m_audioClip: {fileID: 0}
+  m_audioClip: {fileID: 8300000, guid: c68faf8a4aae8264f936ca2265a9d38c, type: 3}
   m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
@@ -11170,46 +11169,6 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!114 &576416280
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 576416264}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f85bd65550f98484eb6af6821d74cfbc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  currentCoinCount: 0
-  coinText: {fileID: 1816773664}
---- !u!61 &576416282
-BoxCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 576416264}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: -0.036643982, y: 0.4044317}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 1, y: 1}
-    newSize: {x: 1, y: 1}
-    adaptiveTilingThreshold: 0.5
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  serializedVersion: 2
-  m_Size: {x: 0.2570839, y: 0.36475706}
-  m_EdgeRadius: 0
 --- !u!114 &576416283
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11280,6 +11239,21 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   vidaSlider: {fileID: 1588463562}
   playerHealth: {fileID: 576416283}
+--- !u!114 &576416287
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 576416264}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f85bd65550f98484eb6af6821d74cfbc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  currentCoinCount: 0
+  coinText: {fileID: 1816773664}
+  coinSound: {fileID: 8300000, guid: c68faf8a4aae8264f936ca2265a9d38c, type: 3}
 --- !u!1 &576699146
 GameObject:
   m_ObjectHideFlags: 0
@@ -31972,7 +31946,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8698283049178281399, guid: c23337c7e613b084eb2b9fe7d0f4051c, type: 3}
       propertyPath: m_RootOrder
-      value: 30
+      value: 29
       objectReference: {fileID: 0}
     - target: {fileID: 8698283049178281399, guid: c23337c7e613b084eb2b9fe7d0f4051c, type: 3}
       propertyPath: m_LocalPosition.x
@@ -55399,21 +55373,9 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1590053910}
     m_Modifications:
-    - target: {fileID: 6597084272483037116, guid: c23337c7e613b084eb2b9fe7d0f4051c, type: 3}
-      propertyPath: maxCollisions
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 6597084272483037116, guid: c23337c7e613b084eb2b9fe7d0f4051c, type: 3}
-      propertyPath: currentCollisions
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 8698283049178281397, guid: c23337c7e613b084eb2b9fe7d0f4051c, type: 3}
       propertyPath: m_Name
       value: Lucy_Block (7)
-      objectReference: {fileID: 0}
-    - target: {fileID: 8698283049178281398, guid: c23337c7e613b084eb2b9fe7d0f4051c, type: 3}
-      propertyPath: m_WasSpriteAssigned
-      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8698283049178281399, guid: c23337c7e613b084eb2b9fe7d0f4051c, type: 3}
       propertyPath: m_RootOrder
