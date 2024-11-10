@@ -9,51 +9,97 @@ public class PlayerAnim : MonoBehaviour
 
     private void Awake()
     {
+        // Tenta pegar os componentes
         animator = GetComponent<Animator>();
         groundedChecker = GetComponent<IsGroundedChecker>();
         playerHealth = GetComponent<Health>();
         playerBehaviour = GetComponent<PlayerBehaviour>();  // Obtenha a referência do PlayerBehaviour
 
+        // Verificações de null
+        if (animator == null)
+        {
+            Debug.LogError("Animator não encontrado no GameObject " + gameObject.name);
+        }
+        if (groundedChecker == null)
+        {
+            Debug.LogError("IsGroundedChecker não encontrado no GameObject " + gameObject.name);
+        }
+        if (playerHealth == null)
+        {
+            Debug.LogError("Health não encontrado no GameObject " + gameObject.name);
+        }
+        if (playerBehaviour == null)
+        {
+            Debug.LogError("PlayerBehaviour não encontrado no GameObject " + gameObject.name);
+        }
+
         // Inscrevendo nos eventos
-        GameManager.Instance.InputManager.OnAttack += PlayAttackAnim;
-        GameManager.Instance.InputManager.OnCrouch += HandleCrouchAnim;  // Liga o evento de agachamento
-        playerHealth.OnHurt += PlayHurtAnim;
-        playerHealth.OnDead += PlayDeadAnim;
+        if (GameManager.Instance != null && GameManager.Instance.InputManager != null)
+        {
+            GameManager.Instance.InputManager.OnAttack += PlayAttackAnim;
+            GameManager.Instance.InputManager.OnCrouch += HandleCrouchAnim;  // Liga o evento de agachamento
+        }
+        else
+        {
+            Debug.LogError("GameManager ou InputManager não encontrados.");
+        }
+
+        if (playerHealth != null)
+        {
+            playerHealth.OnHurt += PlayHurtAnim;
+            playerHealth.OnDead += PlayDeadAnim;
+        }
     }
 
     private void Update()
     {
-        bool isMoving = GameManager.Instance.InputManager.Movement != 0;
-        bool isSliding = playerBehaviour.IsSliding();  // Verifica se o personagem está escorregando
-        bool isJumping = !groundedChecker.IsGrounded();
+        // Verificar se animator é válido antes de usar
+        if (animator != null)
+        {
+            bool isMoving = GameManager.Instance.InputManager.Movement != 0;
+            bool isSliding = playerBehaviour != null && playerBehaviour.IsSliding();  // Verifica se o personagem está escorregando
+            bool isJumping = groundedChecker != null && !groundedChecker.IsGrounded();
 
-        // Define o estado de agachamento antes de definir o estado de andar
-        animator.SetBool("isCrouching", animator.GetBool("isCrouching"));  // Manter o estado atual de agachamento
+            // Define o estado de agachamento antes de definir o estado de andar
+            animator.SetBool("isCrouching", animator.GetBool("isCrouching"));  // Manter o estado atual de agachamento
 
-        // Atualiza o estado de andar
-        animator.SetBool("isWalking", isMoving && !isSliding && !animator.GetBool("isCrouching"));  // Não andar se estiver agachado
+            // Atualiza o estado de andar
+            animator.SetBool("isWalking", isMoving && !isSliding && !animator.GetBool("isCrouching"));  // Não andar se estiver agachado
 
-        animator.SetBool("isJumping", isJumping);
-        animator.SetBool("isSliding", isSliding);  // Define o estado de escorregada
+            animator.SetBool("isJumping", isJumping);
+            animator.SetBool("isSliding", isSliding);  // Define o estado de escorregada
+        }
     }
 
     private void HandleCrouchAnim(bool isCrouching)
     {
-        animator.SetBool("isCrouching", isCrouching);  // Atualiza o estado de agachamento
+        if (animator != null)
+        {
+            animator.SetBool("isCrouching", isCrouching);  // Atualiza o estado de agachamento
+        }
     }
 
     private void PlayAttackAnim()
     {
-        animator.SetTrigger("attack");
+        if (animator != null)
+        {
+            animator.SetTrigger("attack");
+        }
     }
 
     private void PlayHurtAnim()
     {
-        animator.SetTrigger("hurt");
+        if (animator != null)
+        {
+            animator.SetTrigger("hurt");
+        }
     }
 
     private void PlayDeadAnim()
     {
-        animator.SetTrigger("dead");
+        if (animator != null)
+        {
+            animator.SetTrigger("dead");
+        }
     }
 }
