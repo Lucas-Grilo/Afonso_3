@@ -20,6 +20,7 @@ GameObject:
   - component: {fileID: 3890733633289098331}
   - component: {fileID: 3890733633289098330}
   - component: {fileID: 3890733633289098341}
+  - component: {fileID: 1200200572}
   m_Layer: 7
   m_Name: Player
   m_TagString: Player
@@ -34,7 +35,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3890733633289098317}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 141.97, y: -0.494, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -260,8 +261,8 @@ MonoBehaviour:
   moveSpeed: 5
   jumpForce: 7
   crouchSpeed: 2
-  crouchColliderSize: {x: 1, y: 0.5}
-  normalColliderSize: {x: 1, y: 2}
+  crouchColliderSize: {x: 1, y: 0.8}
+  normalColliderSize: {x: 1, y: 1}
   slideSpeed: 8
   slideDuration: 0.5
   attackRange: 0.5
@@ -354,6 +355,18 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.56573284, y: 0.9813697}
   m_EdgeRadius: 0
+--- !u!114 &1200200572
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3890733633289098317}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 32ef49a0ad2820948a00d469986665be, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &3890733633444332519
 GameObject:
   m_ObjectHideFlags: 0
