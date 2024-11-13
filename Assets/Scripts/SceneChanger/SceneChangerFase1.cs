@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class SceneChanger : MonoBehaviour
+public class SceneChangerFase1 : MonoBehaviour
 {
     // Defina o ponto de teletransporte na nova cena
     public Vector2 teleportPosition = new Vector2(125.74f, -3.031f); // Posição padrão com sufixo 'f' para float
