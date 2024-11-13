@@ -39372,18 +39372,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Bridge_Move
       objectReference: {fileID: 0}
-    - target: {fileID: 5632611630473272234, guid: 54d414ab7d92e4048bc50ec57286759b, type: 3}
-      propertyPath: m_Layer
-      value: 6
-      objectReference: {fileID: 0}
-    - target: {fileID: 5632611630473272236, guid: 54d414ab7d92e4048bc50ec57286759b, type: 3}
-      propertyPath: velocidade
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 5632611630473272236, guid: 54d414ab7d92e4048bc50ec57286759b, type: 3}
-      propertyPath: distanciaLimite
-      value: 3
-      objectReference: {fileID: 0}
     - target: {fileID: 5632611630473272237, guid: 54d414ab7d92e4048bc50ec57286759b, type: 3}
       propertyPath: m_RootOrder
       value: 2
