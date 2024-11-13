@@ -9648,7 +9648,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1153121615874940997, guid: ee62e16fb48f53d469009b966f4aa73f, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -34.504852
+      value: -30.55
       objectReference: {fileID: 0}
     - target: {fileID: 1153121615874940997, guid: ee62e16fb48f53d469009b966f4aa73f, type: 3}
       propertyPath: m_LocalPosition.y
@@ -13168,7 +13168,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 8557308361510184428, guid: 4c24136debe4d834f8da10c88771a8d3, type: 3}
       propertyPath: m_RootOrder
-      value: 11
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 8557308361510184428, guid: 4c24136debe4d834f8da10c88771a8d3, type: 3}
       propertyPath: m_LocalPosition.x
@@ -53875,7 +53875,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3890733633289098318, guid: dcc0978d73ef399419b228ecadeedfbd, type: 3}
       propertyPath: m_RootOrder
-      value: 10
+      value: 9
       objectReference: {fileID: 0}
     - target: {fileID: 3890733633289098318, guid: dcc0978d73ef399419b228ecadeedfbd, type: 3}
       propertyPath: m_LocalPosition.x
@@ -53925,6 +53925,10 @@ PrefabInstance:
       propertyPath: vidaSlider
       value: 
       objectReference: {fileID: 1588463562}
+    - target: {fileID: 3890733633289098334, guid: dcc0978d73ef399419b228ecadeedfbd, type: 3}
+      propertyPath: lives
+      value: 20
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: dcc0978d73ef399419b228ecadeedfbd, type: 3}
 --- !u!4 &4384051585271393274 stripped
@@ -54304,7 +54308,7 @@ PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
-    m_TransformParent: {fileID: 0}
+    m_TransformParent: {fileID: 576416267}
     m_Modifications:
     - target: {fileID: 5935862480996373428, guid: 84bb7efcf2c296b47a3856e6d39a532b, type: 3}
       propertyPath: m_AnchorMax.x
@@ -54324,7 +54328,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5935862481121297322, guid: 84bb7efcf2c296b47a3856e6d39a532b, type: 3}
       propertyPath: m_RootOrder
-      value: 9
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 5935862481121297322, guid: 84bb7efcf2c296b47a3856e6d39a532b, type: 3}
       propertyPath: m_AnchorMax.x
@@ -54405,6 +54409,14 @@ PrefabInstance:
     - target: {fileID: 5935862481121297334, guid: 84bb7efcf2c296b47a3856e6d39a532b, type: 3}
       propertyPath: m_Name
       value: Canvas
+      objectReference: {fileID: 0}
+    - target: {fileID: 5935862481492147856, guid: 84bb7efcf2c296b47a3856e6d39a532b, type: 3}
+      propertyPath: m_Value
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 5935862481492147856, guid: 84bb7efcf2c296b47a3856e6d39a532b, type: 3}
+      propertyPath: m_MaxValue
+      value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 5935862482707802486, guid: 84bb7efcf2c296b47a3856e6d39a532b, type: 3}
       propertyPath: m_AnchorMax.x
