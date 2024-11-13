@@ -1696,11 +1696,11 @@ Transform:
   - {fileID: 503035563}
   - {fileID: 1906454247}
   - {fileID: 747411982}
-  - {fileID: 1633711337}
-  - {fileID: 954591144}
   - {fileID: 1226318735}
-  - {fileID: 1098904450}
+  - {fileID: 954591144}
+  - {fileID: 1633711337}
   - {fileID: 572332494}
+  - {fileID: 1098904450}
   - {fileID: 29081392}
   - {fileID: 859155676}
   - {fileID: 2126607105}
@@ -40714,6 +40714,25 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 4085026717234275720, guid: 09b1245dd36f6264bb1a6e1627a9dc50, type: 3}
   m_PrefabInstance: {fileID: 1492687587}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1494528423 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1153121615874941002, guid: ee62e16fb48f53d469009b966f4aa73f, type: 3}
+  m_PrefabInstance: {fileID: 1383150300}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1494528424
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1494528423}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 30c53f706e4d8454e954906a52580ae0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  videoPlayer: {fileID: 0}
+  playerTag: Player
 --- !u!1001 &1494567862
 PrefabInstance:
   m_ObjectHideFlags: 0

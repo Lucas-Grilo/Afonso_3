@@ -135,3 +135,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 456e884b0397a78478b7289dd3c818f1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  teleportPosition: {x: 125.74, y: -3.031}
