@@ -11,6 +11,7 @@ TagManager:
   - TriggerAnimation
   - OnTriggerEnter
   - LucyBlock
+  - Final
   layers:
   - Default
   - TransparentFX
