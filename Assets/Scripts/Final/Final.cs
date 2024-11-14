@@ -1,29 +1,30 @@
 using UnityEngine;
-using UnityEngine.UI;
+using UnityEngine.InputSystem;  // Necessário para usar o Input System
+using UnityEngine.SceneManagement;
 
 public class Final : MonoBehaviour
 {
-    // Referência à imagem da UI que será mostrada após a colisão
     public GameObject imagemUI;
+    private bool isPaused = false;
 
     // Método chamado quando o player entra na área do trigger
     private void OnTriggerEnter2D(Collider2D colisao)
     {
-        Debug.Log("OnTriggerEnter2D chamado!");  // Verifica se o método é chamado
-
-        // Verifica se a colisão é com o objeto específico (por tag)
-        Debug.Log("Colidiu com: " + colisao.gameObject.name); // Imprime o nome do objeto com o qual o trigger foi ativado
-
         if (colisao.gameObject.CompareTag("Player"))
         {
-            Debug.Log("Colisão com o objeto com a tag 'Final' detectada!");  // Log para confirmar que a tag foi encontrada
-            // Torna a imagem visível
             imagemUI.SetActive(true);
-            Time.timeScale = 0f;
+            Time.timeScale = 0f;  // Pausa o jogo
+            isPaused = true;      // Marca o jogo como pausado
         }
-        else
+    }
+
+    // Usando o novo sistema de entrada para detectar o clique
+    private void Update()
+    {
+        if (isPaused && Mouse.current.leftButton.wasPressedThisFrame)  // Verifica se o botão esquerdo do mouse foi pressionado
         {
-            Debug.Log("A tag do objeto não é 'Final'."); // Caso a tag não seja encontrada
+            Time.timeScale = 1f;  // Retorna o jogo ao seu ritmo normal
+            SceneManager.LoadScene("Menu");  // Carrega a cena chamada "Menu"
         }
     }
 }
