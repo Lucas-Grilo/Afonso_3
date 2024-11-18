@@ -4,37 +4,36 @@ using UnityEngine.UI;
 
 public class MenuUI : MonoBehaviour
 {
-    [SerializeField] private GameObject optionsPanel;
     [Header("Menu UI properties")]
     [SerializeField] private Button startButton;
-    [SerializeField] private Button optionsButton;
     [SerializeField] private Button exitButton;
 
-    private void OnEnable()
+    private void Start()
     {
+        // Adiciona os listeners aos botões
         startButton.onClick.AddListener(GoToGameplayScene);
-        optionsButton.onClick.AddListener(OptionGame);
         exitButton.onClick.AddListener(ExitGame);
     }
 
     private void GoToGameplayScene()
     {
-        GameManager.Instance.AudioManager.PlaySFX(SFX.ButtonClick);
-        SceneManager.LoadScene("Fase_1");
-    }
-    private void OptionGame()
-    {
-        GameManager.Instance.AudioManager.PlaySFX(SFX.ButtonClick);
-        optionsPanel.SetActive(true);
+        // Carregar a cena do jogo
+        SceneManager.LoadScene("Fase_1"); // Nome da cena de gameplay
     }
 
     private void ExitGame()
     {
-        GameManager.Instance.AudioManager.PlaySFX(SFX.ButtonClick);
-#if UNITY_EDITOR
-        UnityEditor.EditorApplication.isPlaying = false;
-#else
-        Application.Quit();
-#endif
+        // Sair do jogo
+        #if UNITY_EDITOR
+            UnityEditor.EditorApplication.isPlaying = false;
+        #else
+            Application.Quit();
+        #endif
+    }
+
+    // Este método pode ser chamado quando o jogador morrer e a cena de menu for carregada
+    public void ShowMenuAfterDeath()
+    {
+        gameObject.SetActive(true); // Ativa o painel do menu
     }
 }

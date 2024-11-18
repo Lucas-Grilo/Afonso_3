@@ -1,11 +1,14 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;  // Certifique-se de que você tem esse using para o SceneManager
 
 public class PlayerAnim : MonoBehaviour
 {
     private Animator animator;
     private IsGroundedChecker groundedChecker;
     private Health playerHealth;
-    private PlayerBehaviour playerBehaviour;  // Referência para verificar o status da escorregada
+    private PlayerBehaviour playerBehaviour;
+
+    private bool hasDied = false;
 
     private void Awake()
     {
@@ -37,7 +40,6 @@ public class PlayerAnim : MonoBehaviour
         if (GameManager.Instance != null && GameManager.Instance.InputManager != null)
         {
             GameManager.Instance.InputManager.OnAttack += PlayAttackAnim;
-            GameManager.Instance.InputManager.OnCrouch += HandleCrouchAnim;  // Liga o evento de agachamento
         }
         else
         {
@@ -53,29 +55,51 @@ public class PlayerAnim : MonoBehaviour
 
     private void Update()
     {
-        // Verificar se animator é válido antes de usar
-        if (animator != null)
+        if (animator == null || playerBehaviour == null || groundedChecker == null)
+            return;  // Se qualquer referência importante estiver ausente, não faça nada.
+
+        bool isMoving = GameManager.Instance.InputManager.Movement != 0;
+        bool isSliding = playerBehaviour.IsSliding();  // Verifica se o personagem está escorregando
+        bool isJumping = !groundedChecker.IsGrounded();
+
+        // Atualiza o estado de agachamento
+        bool isCurrentlyCrouching = playerBehaviour.IsCrouching();
+        animator.SetBool("isCrouching", isCurrentlyCrouching);  // Refatorando para obter diretamente o estado de agachamento
+
+        // Atualiza o estado de andar (só atualiza se o estado for realmente diferente)
+        bool shouldWalk = isMoving && !isSliding && !isCurrentlyCrouching;
+        if (animator.GetBool("isWalking") != shouldWalk)
         {
-            bool isMoving = GameManager.Instance.InputManager.Movement != 0;
-            bool isSliding = playerBehaviour != null && playerBehaviour.IsSliding();  // Verifica se o personagem está escorregando
-            bool isJumping = groundedChecker != null && !groundedChecker.IsGrounded();
+            animator.SetBool("isWalking", shouldWalk);
+        }
 
-            // Define o estado de agachamento antes de definir o estado de andar
-            animator.SetBool("isCrouching", animator.GetBool("isCrouching"));  // Manter o estado atual de agachamento
-
-            // Atualiza o estado de andar
-            animator.SetBool("isWalking", isMoving && !isSliding && !animator.GetBool("isCrouching"));  // Não andar se estiver agachado
-
+        // Atualiza os estados de pulo e escorregada
+        if (animator.GetBool("isJumping") != isJumping)
+        {
             animator.SetBool("isJumping", isJumping);
+        }
+
+        if (animator.GetBool("isSliding") != isSliding)
+        {
             animator.SetBool("isSliding", isSliding);  // Define o estado de escorregada
         }
-    }
 
-    private void HandleCrouchAnim(bool isCrouching)
-    {
-        if (animator != null)
+        // Verifica se a animação de morte acabou
+        if (hasDied)
         {
-            animator.SetBool("isCrouching", isCrouching);  // Atualiza o estado de agachamento
+            Debug.Log("A animação de morte está em execução.");
+            AnimatorStateInfo stateInfo = animator.GetCurrentAnimatorStateInfo(0);
+
+            // Verificando se a animação de morte terminou
+            if (stateInfo.IsName("anim_Dead"))
+            {
+                Debug.Log("A animação de morte está tocando.");
+            }
+            if (stateInfo.normalizedTime >= 1f && stateInfo.IsName("anim_Dead"))
+            {
+                Debug.Log("A animação de morte terminou. Carregando cena do menu...");
+                ShowMenuAfterDeath();
+            }
         }
     }
 
@@ -100,6 +124,15 @@ public class PlayerAnim : MonoBehaviour
         if (animator != null)
         {
             animator.SetTrigger("dead");
+            hasDied = true;  // Marca que o jogador morreu
+            Debug.Log("Trigger de morte ativado.");
         }
+    }
+
+    private void ShowMenuAfterDeath()
+    {
+        // Carregar a cena do menu após a morte
+        Debug.Log("Carregando a cena do menu...");
+        SceneManager.LoadScene("MenuScene");
     }
 }

@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PlayerBehaviour : MonoBehaviour
 {
@@ -25,24 +26,30 @@ public class PlayerBehaviour : MonoBehaviour
     private BoxCollider2D boxCollider;
     private Health health;
     private IsGroundedChecker isGroundedChecker;
+    private Animator animator;
 
     private Transform movingPlatform;
     private Vector3 previousPlatformPosition;
 
-    private bool hasDied = false; // Variável de controle para tocar o som de morte apenas uma vez
+    private bool hasDied = false;
 
     private void Awake()
     {
+        // Inicializando os componentes necessários
         playerRigidbody = GetComponent<Rigidbody2D>();
         boxCollider = GetComponent<BoxCollider2D>();
         isGroundedChecker = GetComponent<IsGroundedChecker>();
         health = GetComponent<Health>();
+        animator = GetComponent<Animator>();
+
+        // Assinando eventos de dano e morte
         health.OnHurt += PlayHurtAudio;
         health.OnDead += HandlePlayerDeath;
     }
 
     private void Start()
     {
+        // Inicializando as entradas do jogador
         GameManager.Instance.InputManager.OnJump += HandleJump;
         GameManager.Instance.InputManager.OnSlide += HandleSlide;
         GameManager.Instance.InputManager.OnCrouch += HandleCrouch;
@@ -50,17 +57,20 @@ public class PlayerBehaviour : MonoBehaviour
 
     private void Update()
     {
+        // Movimento do jogador, slide ou pulo
         if (isSliding)
         {
-            SlidePlayer();
+            SlidePlayer(); // Quando estiver deslizando, chamamos o método SlidePlayer
         }
         else
         {
-            MovePlayer();
+            MovePlayer();  // Senão, movimentamos o jogador normalmente
         }
 
+        // Virar o sprite de acordo com a direção do movimento
         FlipSpriteAccordingToMoveDirection();
 
+        // Manter o jogador na plataforma móvel
         if (movingPlatform != null)
         {
             Vector3 platformMovement = movingPlatform.position - previousPlatformPosition;
@@ -71,8 +81,10 @@ public class PlayerBehaviour : MonoBehaviour
 
     private void MovePlayer()
     {
+        // Obter o movimento do jogador
         moveDirection = GameManager.Instance.InputManager.Movement;
 
+        // Verificar se o jogador está agachado ou não
         if (isCrouching)
         {
             transform.Translate(moveDirection * Time.deltaTime * crouchSpeed, 0, 0);
@@ -85,6 +97,7 @@ public class PlayerBehaviour : MonoBehaviour
 
     private void OnCollisionStay2D(Collision2D collision)
     {
+        // Verificar se o jogador está sobre uma plataforma móvel
         if (collision.gameObject.CompareTag("Movel"))
         {
             movingPlatform = collision.transform;
@@ -94,6 +107,7 @@ public class PlayerBehaviour : MonoBehaviour
 
     private void OnCollisionExit2D(Collision2D collision)
     {
+        // Quando o jogador sai de uma plataforma móvel, a plataforma é nula
         if (collision.gameObject.CompareTag("Movel"))
         {
             movingPlatform = null;
@@ -102,6 +116,7 @@ public class PlayerBehaviour : MonoBehaviour
 
     private void HandleCrouch(bool crouching)
     {
+        // Lógica de agachar
         isCrouching = crouching;
 
         if (crouching)
@@ -118,10 +133,11 @@ public class PlayerBehaviour : MonoBehaviour
 
     private void SlidePlayer()
     {
+        // Deslizar o jogador
         slideTimer -= Time.deltaTime;
         if (slideTimer <= 0)
         {
-            isSliding = false;
+            isSliding = false;  // Se o tempo de slide acabar, interromper o slide
             return;
         }
 
@@ -130,6 +146,7 @@ public class PlayerBehaviour : MonoBehaviour
 
     private void HandleSlide()
     {
+        // Se o jogador não está no chão ou já está deslizando, não inicia o slide
         if (!isGroundedChecker.IsGrounded() || isSliding) return;
 
         isSliding = true;
@@ -138,44 +155,58 @@ public class PlayerBehaviour : MonoBehaviour
 
     private void FlipSpriteAccordingToMoveDirection()
     {
+        // Virar o sprite para a esquerda ou direita dependendo da direção
         if (moveDirection < 0)
         {
-            transform.localScale = new Vector3(-1, 1, 1);
+            transform.localScale = new Vector3(-1, 1, 1); 
         }
         else if (moveDirection > 0)
         {
-            transform.localScale = Vector3.one;
+            transform.localScale = new Vector3(1, 1, 1); 
         }
     }
 
     private void HandleJump()
     {
+        // Realizar o pulo do jogador
         if (!isGroundedChecker.IsGrounded() || isCrouching) return;
         playerRigidbody.velocity += Vector2.up * jumpForce;
         GameManager.Instance.AudioManager.PlaySFX(SFX.PlayerJump);
     }
 
-    private void PlayHurtAudio() 
-    { 
-            GameManager.Instance.AudioManager.PlaySFX(SFX.PlayerHurt);
+    private void PlayHurtAudio()
+    {
+        // Tocar som de dano
+        GameManager.Instance.AudioManager.PlaySFX(SFX.PlayerHurt);
     }
 
     private void HandlePlayerDeath()
     {
-        if (!hasDied) // Verifica se o jogador já morreu
+        // Lógica para a morte do jogador
+        if (!hasDied)
         {
-            hasDied = true; // Marca que o som de morte já foi tocado
-            GetComponent<Collider2D>().enabled = false;
-            playerRigidbody.constraints = RigidbodyConstraints2D.FreezeAll;
-            GameManager.Instance.InputManager.DisablePlayerInput();
+            hasDied = true;
+            GetComponent<Collider2D>().enabled = false; // Desabilitar colisão
+            playerRigidbody.constraints = RigidbodyConstraints2D.FreezeAll; // Congelar movimento
+            GameManager.Instance.InputManager.DisablePlayerInput(); // Desabilitar entradas
             GameManager.Instance.AudioManager.PlaySFX(SFX.PlayerDeath);
+
+            animator.SetTrigger("dead");  // Trigger de animação de morte
         }
+    }
+
+    private void ShowMenuAfterDeath()
+    {
+        // Carregar a cena do menu após a morte
+        SceneManager.LoadScene("MenuScene"); 
     }
 
     private void Attack()
     {
+        // Lógica de ataque
         Collider2D[] hittedEnemies = Physics2D.OverlapCircleAll(attackPosition.position, attackRange, attackLayer);
         GameManager.Instance.AudioManager.PlaySFX(SFX.PlayerAttack);
+
         foreach (Collider2D hittedEnemy in hittedEnemies)
         {
             if (hittedEnemy.TryGetComponent(out Health enemyHealth))
@@ -187,10 +218,18 @@ public class PlayerBehaviour : MonoBehaviour
 
     private void OnDrawGizmos()
     {
+        // Desenhar gizmos para o alcance do ataque no editor
         Gizmos.color = Color.yellow;
         Gizmos.DrawWireSphere(attackPosition.position, attackRange);
     }
 
+    // Método para acessar o estado de agachamento (adicionado para o PlayerAnim)
+    public bool IsCrouching()
+    {
+        return isCrouching;
+    }
+
+    // Método para acessar o estado de deslize (adicionado para o PlayerAnim)
     public bool IsSliding()
     {
         return isSliding;
